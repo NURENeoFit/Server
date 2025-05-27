@@ -19,6 +19,10 @@ namespace BackEndAPI
         public DbSet<UserExerciseLog> UserExerciseLogs { get; set; }
         public DbSet<FitnessTrainer> FitnessTrainers { get; set; }
         public DbSet<GymTrainer> GymTrainers { get; set; }
+        public DbSet<SportComplex> SportComplexes { get; set; }
+        public DbSet<FitnessCenter> FitnessCenters { get; set; }
+        public DbSet<GymCenter> GymCenters { get; set; }
+        public DbSet<WorkingTime> WorkingTimes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -111,6 +115,23 @@ namespace BackEndAPI
             // Inheritance for FitnessTrainer and GymTrainer
             modelBuilder.Entity<FitnessTrainer>().HasBaseType<Trainer>();
             modelBuilder.Entity<GymTrainer>().HasBaseType<Trainer>();
+
+            // SportComplex - FitnessCenter (one-to-many)
+            modelBuilder.Entity<FitnessCenter>()
+                .HasOne(fc => fc.SportComplex)
+                .WithMany(sc => sc.FitnessCenters)
+                .HasForeignKey(fc => fc.SportComplexId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // SportComplex - GymCenter (one-to-many, if needed)
+            // If GymCenter should be linked to SportComplex, add a SportComplexId FK to GymCenter and configure here.
+
+            // SportComplex - WorkingTime (one-to-many)
+            modelBuilder.Entity<WorkingTime>()
+                .HasOne(wt => wt.SportComplex)
+                .WithMany(sc => sc.WorkingTimes)
+                .HasForeignKey(wt => wt.SportComplexId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 } 
