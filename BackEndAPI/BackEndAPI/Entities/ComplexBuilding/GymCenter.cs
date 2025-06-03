@@ -19,5 +19,7 @@ namespace BackEndAPI.Entities
         [ForeignKey("SportComplex")]
         public int SportComplexId { get; set; }
         public SportComplex SportComplex { get; set; }
+
+        public ICollection<GymMembership> GymMemberships { get; set; }
     }
 } 

@@ -20,6 +20,8 @@ namespace BackEndAPI.Entities
         public DateTime? UpdatedAt { get; set; }
 
         // Navigation property for PersonalUserData
-        public ICollection<PersonalUserData> PersonalUserData { get; set; }
+        public ICollection<PersonalUserData> PersonalUsersData { get; set; }
+        public ICollection<WorkoutProgram> WorkoutPrograms { get; set; }
+
     }
 } 

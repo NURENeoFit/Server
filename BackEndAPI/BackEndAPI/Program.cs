@@ -37,6 +37,10 @@ namespace BackEndAPI
             builder.Services.AddScoped<IFitnessCenterRepository, FitnessCenterRepository>();
             builder.Services.AddScoped<IGymCenterRepository, GymCenterRepository>();
             builder.Services.AddScoped<IWorkingTimeRepository, WorkingTimeRepository>();
+            builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
+            builder.Services.AddScoped<IFitnessMembershipRepository, FitnessMembershipRepository>();
+            builder.Services.AddScoped<IGymMembershipRepository, GymMembershipRepository>();
+            builder.Services.AddScoped<IGymTrainerMembershipRepository, GymTrainerMembershipRepository>();
 
             var app = builder.Build();
 

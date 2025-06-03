@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BackEndAPI.Entities;
 using BackEndAPI.DAL.Interfaces;
+using BackEndAPI.Entities.Enums;
 
 namespace BackEndAPI.DAL.Repositories
 {
@@ -11,17 +12,10 @@ namespace BackEndAPI.DAL.Repositories
     {
         public GoalRepository(AppDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<WorkoutProgram>> GetWorkoutProgramsByGoalIdAsync(int goalId)
+        public async Task<IEnumerable<Goal>> GetAllGoalsByTypeAsync(GoalType goalType)
         {
-            return await _context.WorkoutPrograms
-                .Where(wp => wp.ProgramGoalId == goalId)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<PersonalUserData>> GetPersonalUserDataByGoalIdAsync(int goalId)
-        {
-            return await _context.PersonalUserData
-                .Where(pud => pud.GoalId == goalId)
+            return await _context.Goals
+                .Where(g => g.GoalType == goalType)
                 .ToListAsync();
         }
     }

@@ -23,6 +23,20 @@ namespace BackEndAPI
         public DbSet<FitnessCenter> FitnessCenters { get; set; }
         public DbSet<GymCenter> GymCenters { get; set; }
         public DbSet<WorkingTime> WorkingTimes { get; set; }
+        public DbSet<Membership> Memberships { get; set; }
+        public DbSet<FitnessMembership> FitnessMemberships { get; set; }
+        public DbSet<GymMembership> GymMemberships { get; set; }
+        public DbSet<GymTrainerMembership> GymTrainerMemberships { get; set; }
+        public DbSet<FitnessRoom> FitnessRooms { get; set; }
+        public DbSet<GroupTraining> GroupTrainings { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<TrainerSpecialization> TrainerSpecializations { get; set; }
+        public DbSet<GroupSchedule> GroupSchedules { get; set; }
+        public DbSet<GymTrainerMembershipBooking> GymTrainerMembershipBookings { get; set; }
+        public DbSet<FitnessMembershipBooking> FitnessMembershipBookings { get; set; }
+        public DbSet<GymMembershipBooking> GymMembershipBookings { get; set; }
+        public DbSet<GroupTrainingBooking> GroupTrainingBookings { get; set; }
+        public DbSet<Gym> Gyms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -131,6 +145,100 @@ namespace BackEndAPI
                 .HasOne(wt => wt.SportComplex)
                 .WithMany(sc => sc.WorkingTimes)
                 .HasForeignKey(wt => wt.SportComplexId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Membership inheritance - Table-per-Type (TPT)
+            modelBuilder.Entity<Membership>().ToTable("Memberships");
+            modelBuilder.Entity<FitnessMembership>().ToTable("FitnessMemberships");
+            modelBuilder.Entity<GymMembership>().ToTable("GymMemberships");
+            modelBuilder.Entity<GymTrainerMembership>().ToTable("GymTrainerMemberships");
+
+            // FitnessMembership - FitnessCenter (many-to-one)
+            modelBuilder.Entity<FitnessMembership>()
+                .HasOne(fm => fm.FitnessCenter)
+                .WithMany()
+                .HasForeignKey(fm => fm.FitnessCenterId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // GymMembership - GymCenter (many-to-one)
+            modelBuilder.Entity<GymMembership>()
+                .HasOne(gm => gm.GymCenter)
+                .WithMany()
+                .HasForeignKey(gm => gm.GymCenterId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // GymTrainerMembership - GymTrainer (many-to-one)
+            modelBuilder.Entity<GymTrainerMembership>()
+                .HasOne(gtm => gtm.GymTrainer)
+                .WithMany()
+                .HasForeignKey(gtm => gtm.GymTrainerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Trainer inheritance - Table-per-Type (TPT)
+            modelBuilder.Entity<Trainer>().ToTable("Trainers");
+            modelBuilder.Entity<FitnessTrainer>().ToTable("FitnessTrainers");
+            modelBuilder.Entity<GymTrainer>().ToTable("GymTrainers");
+
+            // FitnessRoom - FitnessCenter (many-to-one)
+            modelBuilder.Entity<FitnessRoom>()
+                .HasOne(fr => fr.FitnessCenter)
+                .WithMany()
+                .HasForeignKey(fr => fr.FitnessCenterId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // GroupTraining - Specialization (many-to-one)
+            modelBuilder.Entity<GroupTraining>()
+                .HasOne(gt => gt.Specialization)
+                .WithMany()
+                .HasForeignKey(gt => gt.SpecializationId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // GroupTraining - FitnessRoom (many-to-one)
+            modelBuilder.Entity<GroupTraining>()
+                .HasOne(gt => gt.FitnessRoom)
+                .WithMany()
+                .HasForeignKey(gt => gt.FitnessRoomId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // TrainerSpecialization (composite key)
+            modelBuilder.Entity<TrainerSpecialization>()
+                .HasKey(ts => new { ts.SpecializationId, ts.TrainerId });
+            modelBuilder.Entity<TrainerSpecialization>()
+                .HasOne(ts => ts.Specialization)
+                .WithMany()
+                .HasForeignKey(ts => ts.SpecializationId);
+            modelBuilder.Entity<TrainerSpecialization>()
+                .HasOne(ts => ts.Trainer)
+                .WithMany()
+                .HasForeignKey(ts => ts.TrainerId);
+
+            // GroupSchedule - FitnessTrainer (many-to-one)
+            modelBuilder.Entity<GroupSchedule>()
+                .HasOne(gs => gs.FitnessTrainer)
+                .WithMany()
+                .HasForeignKey(gs => gs.FitnessTrainerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // GroupSchedule - GroupTraining (many-to-one)
+            modelBuilder.Entity<GroupSchedule>()
+                .HasOne(gs => gs.GroupTraining)
+                .WithMany()
+                .HasForeignKey(gs => gs.GroupTrainingId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Composite keys for booking entities
+            modelBuilder.Entity<GymTrainerMembershipBooking>()
+                .HasKey(b => new { b.UserId, b.MembershipId });
+            modelBuilder.Entity<FitnessMembershipBooking>()
+                .HasKey(b => new { b.UserId, b.MembershipId });
+            modelBuilder.Entity<GymMembershipBooking>()
+                .HasKey(b => new { b.UserId, b.MembershipId });
+
+            // Gym - GymCenter (many-to-one)
+            modelBuilder.Entity<Gym>()
+                .HasOne(g => g.GymCenter)
+                .WithMany()
+                .HasForeignKey(g => g.GymCenterId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

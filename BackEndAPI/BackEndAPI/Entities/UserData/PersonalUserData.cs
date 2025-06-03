@@ -39,5 +39,8 @@ namespace BackEndAPI.Entities
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+
+        public ICollection<UserTargetCalculation> UserTargetCalculations { get; set; }
+        public ICollection<UserMeal> UserMeals { get; set; }
     }
 } 

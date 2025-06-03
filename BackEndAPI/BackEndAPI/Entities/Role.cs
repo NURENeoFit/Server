@@ -13,5 +13,7 @@ namespace BackEndAPI.Entities
 
         [StringLength(200)]
         public string RoleDescription { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 } 
