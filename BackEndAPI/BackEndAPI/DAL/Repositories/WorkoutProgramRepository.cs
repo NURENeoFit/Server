@@ -18,7 +18,7 @@ namespace BackEndAPI.DAL.Repositories
                 .Include(wp => wp.Trainer)
                 .Include(wp => wp.Goal)
                 .Where(wp => wp.TrainerId == trainerId)
-                .OrderBy(wp => wp.Name)
+                .OrderBy(wp => wp.ProgramName)
                 .ToListAsync();
         }
 
