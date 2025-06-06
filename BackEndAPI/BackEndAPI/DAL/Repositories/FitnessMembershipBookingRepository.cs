@@ -10,7 +10,6 @@ namespace BackEndAPI.DAL.Repositories
     public class FitnessMembershipBookingRepository : GenericRepository<FitnessMembershipBooking>, IFitnessMembershipBookingRepository
     {
         public FitnessMembershipBookingRepository(AppDbContext context) : base(context) { }
-
         public async Task<FitnessMembershipBooking> CreateFitnessMembershipBookingAsync(FitnessMembershipBooking booking)
         {
             await _context.FitnessMembershipBookings.AddAsync(booking);
@@ -47,8 +46,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<FitnessMembershipBooking> GetFitnessMembershipBookingByIdAsync(int bookingId)
         {
             return await _context.FitnessMembershipBookings
-                .Include(b => b.FitnessMembership)
-                    .ThenInclude(fm => fm.Membership)
+                .Include(b => b.User)
                 .Include(b => b.FitnessMembership)
                     .ThenInclude(fm => fm.FitnessCenter)
                 .FirstOrDefaultAsync(b => b.FitnessMembershipBookingId == bookingId);
@@ -57,8 +55,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<IEnumerable<FitnessMembershipBooking>> GetAllFitnessMembershipBookingsAsync()
         {
             return await _context.FitnessMembershipBookings
-                .Include(b => b.FitnessMembership)
-                    .ThenInclude(fm => fm.Membership)
+                .Include(b => b.User)
                 .Include(b => b.FitnessMembership)
                     .ThenInclude(fm => fm.FitnessCenter)
                 .ToListAsync();
@@ -67,19 +64,17 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<IEnumerable<FitnessMembershipBooking>> GetFitnessMembershipBookingsByUserIdAsync(int userId)
         {
             return await _context.FitnessMembershipBookings
-                .Include(b => b.FitnessMembership)
-                    .ThenInclude(fm => fm.Membership)
+                .Include(b => b.User)
                 .Include(b => b.FitnessMembership)
                     .ThenInclude(fm => fm.FitnessCenter)
-                .Where(b => b.FitnessMembership.Membership.UserId == userId)
+                .Where(b => b.UserId == userId)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<FitnessMembershipBooking>> GetFitnessMembershipBookingsByFitnessMembershipIdAsync(int fitnessMembershipId)
         {
             return await _context.FitnessMembershipBookings
-                .Include(b => b.FitnessMembership)
-                    .ThenInclude(fm => fm.Membership)
+                .Include(b => b.User)
                 .Include(b => b.FitnessMembership)
                     .ThenInclude(fm => fm.FitnessCenter)
                 .Where(b => b.MembershipId == fitnessMembershipId)

@@ -16,10 +16,9 @@ namespace BackEndAPI.DAL.Repositories
             // Сначала создаем базовое членство
             var baseMembership = new Membership
             {
-                UserId = membership.UserId,
-                StartDate = membership.StartDate,
-                EndDate = membership.EndDate,
-                MembershipPrice = membership.MembershipPrice
+                MembershipPrice = membership.MembershipPrice,
+                MembershipName = membership.MembershipName,
+                MembershipDescription = membership.MembershipDescription,
             };
 
             _context.Memberships.Add(baseMembership);
@@ -82,16 +81,6 @@ namespace BackEndAPI.DAL.Repositories
             return await _context.FitnessMemberships
                 .Include(fm => fm.Membership)
                 .Include(fm => fm.FitnessCenter)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<FitnessMembership>> GetFitnessMembershipsByUserIdAsync(int userId)
-        {
-            return await _context.FitnessMemberships
-                .Include(fm => fm.Membership)
-                .Include(fm => fm.FitnessCenter)
-                .Where(fm => fm.Membership.UserId == userId)
-                .OrderByDescending(fm => fm.Membership.StartDate)
                 .ToListAsync();
         }
 

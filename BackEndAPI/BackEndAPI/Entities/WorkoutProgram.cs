@@ -9,31 +9,29 @@ namespace BackEndAPI.Entities
     public class WorkoutProgram
     {
         [Key]
-        public int WorkoutTrainingId { get; set; }
-
+        [Required]
+        public int WorkoutProgramId { get; set; }
         [Required]
         [StringLength(100)]
-        public string ProgramName { get; set; }
+        public string? ProgramName { get; set; }
 
         [Required]
-        [ForeignKey("Trainer")]
-        public int TrainerId { get; set; }
-        public Trainer Trainer { get; set; }
-
-        [Required]
-        [ForeignKey("Goal")]
-        public int ProgramGoalId { get; set; }
-        public Goal Goal { get; set; }
-
-        [Required]
-        public int Duration { get; set; } // in days
+        public int Duration { get; set; } //in days
 
         [Required]
         public ProgramType ProgramType { get; set; }
 
-        public ICollection<Exercise> Exercises { get; set; }
+        //Foreign key
+        [Required]
+        public int TrainerId { get; set; }
+        [ForeignKey("TrainerId")]
+        public Trainer? Trainer { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
+        [Required]
+        public int ProgramGoalId { get; set; }
+        [ForeignKey("GoalId")]
+        public Goal? Goal { get; set; }
+
+        public List<Exercise>? Exercises { get; set; } = new List<Exercise>();
     }
 } 

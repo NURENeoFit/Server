@@ -11,12 +11,14 @@ namespace BackEndAPI.DAL.Repositories
     {
         public GroupTrainingRepository(AppDbContext context) : base(context) { }
 
-
         public async Task<IEnumerable<GroupTraining>> GetAllGroupTrainingsByFitnessCenterIdAsync(int fitnessCenterId)
         {
             return await _context.GroupTrainings
                 .Include(gt => gt.Specialization)
                 .Include(gt => gt.FitnessRoom)
+                    .ThenInclude(fr => fr.FitnessCenter)
+                .Include(gt => gt.GroupSchedules)
+                    .ThenInclude(gs => gs.FitnessTrainer)
                 .Where(gt => gt.FitnessRoom.FitnessCenterId == fitnessCenterId)
                 .ToListAsync();
         }
@@ -26,6 +28,9 @@ namespace BackEndAPI.DAL.Repositories
             return await _context.GroupTrainings
                 .Include(gt => gt.Specialization)
                 .Include(gt => gt.FitnessRoom)
+                    .ThenInclude(fr => fr.FitnessCenter)
+                .Include(gt => gt.GroupSchedules)
+                    .ThenInclude(gs => gs.FitnessTrainer)
                 .Where(gt => gt.SpecializationId == specializationId)
                 .ToListAsync();
         }
@@ -35,6 +40,9 @@ namespace BackEndAPI.DAL.Repositories
             return await _context.GroupTrainings
                 .Include(gt => gt.Specialization)
                 .Include(gt => gt.FitnessRoom)
+                    .ThenInclude(fr => fr.FitnessCenter)
+                .Include(gt => gt.GroupSchedules)
+                    .ThenInclude(gs => gs.FitnessTrainer)
                 .Where(gt => gt.FitnessRoom.FitnessCenterId == fitnessCenterId && gt.SpecializationId == specializationId)
                 .ToListAsync();
         }

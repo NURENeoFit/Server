@@ -67,11 +67,10 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<IEnumerable<GymTrainerMembershipBooking>> GetGymTrainerMembershipBookingsByUserIdAsync(int userId)
         {
             return await _context.GymTrainerMembershipBookings
-                .Include(b => b.GymTrainerMembership)
-                    .ThenInclude(gtm => gtm.Membership)
+                .Include(b => b.User)
                 .Include(b => b.GymTrainerMembership)
                     .ThenInclude(gtm => gtm.GymTrainer)
-                .Where(b => b.GymTrainerMembership.Membership.UserId == userId)
+                .Where(b => b.UserId == userId)
                 .ToListAsync();
         }
 

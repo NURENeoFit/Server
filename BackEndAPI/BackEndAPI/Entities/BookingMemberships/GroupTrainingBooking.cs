@@ -7,6 +7,7 @@ namespace BackEndAPI.Entities
     public class GroupTrainingBooking
     {
         [Key]
+        [Required]
         public int GroupTrainingBookingId { get; set; }
         [Required]
         public DateTime BookingDate { get; set; }

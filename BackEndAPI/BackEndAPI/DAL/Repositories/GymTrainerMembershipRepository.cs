@@ -16,9 +16,9 @@ namespace BackEndAPI.DAL.Repositories
             // Сначала создаем базовое членство
             var baseMembership = new Membership
             {
-                UserId = membership.UserId,
-                StartDate = membership.StartDate,
-                EndDate = membership.EndDate,
+                MembershipPrice = membership.MembershipPrice,
+                MembershipName = membership.MembershipName,
+                MembershipDescription = membership.MembershipDescription,
             };
 
             _context.Memberships.Add(baseMembership);
@@ -41,14 +41,11 @@ namespace BackEndAPI.DAL.Repositories
             if (existingMembership == null)
                 return null;
 
-            // Обновляем базовые данные членства
-            existingMembership.Membership.StartDate = membership.StartDate;
-            existingMembership.Membership.EndDate = membership.EndDate;
-            existingMembership.Membership.MembershipPrice = membership.Price;
+            existingMembership.Membership.MembershipPrice = membership.MembershipPrice;
+            existingMembership.Membership.MembershipName = membership.MembershipName;
+            existingMembership.Membership.MembershipDescription = membership.MembershipDescription;
 
-            // Обновляем специфичные данные членства с тренером
             existingMembership.GymTrainerId = membership.GymTrainerId;
-            //existingMembership.WorkoutProgramIds = membership.WorkoutProgramIds;
 
             await _context.SaveChangesAsync();
             return existingMembership;
@@ -85,15 +82,6 @@ namespace BackEndAPI.DAL.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<GymTrainerMembership>> GetGymTrainerMembershipsByUserIdAsync(int userId)
-        {
-            return await _context.GymTrainerMemberships
-                .Include(gtm => gtm.Membership)
-                .Include(gtm => gtm.GymTrainer)
-                .Where(gtm => gtm.Membership.UserId == userId)
-                .OrderByDescending(gtm => gtm.Membership.StartDate)
-                .ToListAsync();
-        }
 
         public async Task<IEnumerable<GymTrainerMembership>> GetGymTrainerMembershipsByTrainerIdAsync(int trainerId)
         {

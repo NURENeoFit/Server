@@ -7,7 +7,7 @@ using BackEndAPI.DAL.Interfaces;
 
 namespace BackEndAPI.DAL.Repositories
 {
-    public class GymTrainerRepository : GenericRepository<GymTrainer>
+    public class GymTrainerRepository : GenericRepository<GymTrainer>, IGymTrainerRepository
     {
         public GymTrainerRepository(AppDbContext context) : base(context) { }
 
@@ -33,52 +33,52 @@ namespace BackEndAPI.DAL.Repositories
             return trainer;
         }
 
-        //public async Task<GymTrainer> UpdateGymTrainerAsync(GymTrainer trainer)
-        //{
-        //    var existingTrainer = await _context.GymTrainers
-        //        .Include(gt => gt.Trainer)
-        //        .FirstOrDefaultAsync(gt => gt.TrainerId == trainer.TrainerId);
+        public async Task<GymTrainer> UpdateGymTrainerAsync(GymTrainer trainer)
+        {
+            var existingTrainer = await _context.GymTrainers
+                .Include(gt => gt.Trainer)
+                .FirstOrDefaultAsync(gt => gt.TrainerId == trainer.TrainerId);
 
-        //    if (existingTrainer == null)
-        //        return null;
+            if (existingTrainer == null)
+                return null;
 
-        //    existingTrainer.Trainer.FirstName = trainer.FirstName;
-        //    existingTrainer.Trainer.LastName = trainer.LastName;
-        //    existingTrainer.Trainer.Email = trainer.Email;
-        //    existingTrainer.Trainer.Phone = trainer.Phone;
+            existingTrainer.Trainer.FirstName = trainer.FirstName;
+            existingTrainer.Trainer.LastName = trainer.LastName;
+            existingTrainer.Trainer.Email = trainer.Email;
+            existingTrainer.Trainer.Phone = trainer.Phone;
 
-        //    await _context.SaveChangesAsync();
-        //    return existingTrainer;
-        //}
+            await _context.SaveChangesAsync();
+            return existingTrainer;
+        }
 
-        //public async Task<bool> DeleteGymTrainerAsync(int trainerId)
-        //{
-        //    var trainer = await _context.GymTrainers
-        //        .Include(gt => gt.Trainer)
-        //        .FirstOrDefaultAsync(gt => gt.TrainerId == trainerId);
+        public async Task<bool> DeleteGymTrainerAsync(int trainerId)
+        {
+            var trainer = await _context.GymTrainers
+                .Include(gt => gt.Trainer)
+                .FirstOrDefaultAsync(gt => gt.TrainerId == trainerId);
 
-        //    if (trainer == null)
-        //        return false;
+            if (trainer == null)
+                return false;
 
-        //    _context.GymTrainers.Remove(trainer);
-        //    _context.Trainers.Remove(trainer.Trainer);
-        //    await _context.SaveChangesAsync();
-        //    return true;
-        //}
+            _context.GymTrainers.Remove(trainer);
+            _context.Trainers.Remove(trainer.Trainer);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
-        //public async Task<GymTrainer> GetGymTrainerByIdAsync(int trainerId)
-        //{
-        //    return await _context.GymTrainers
-        //        .Include(gt => gt.Trainer)
-        //        .FirstOrDefaultAsync(gt => gt.TrainerId == trainerId);
-        //}
+        public async Task<GymTrainer> GetGymTrainerByIdAsync(int trainerId)
+        {
+            return await _context.GymTrainers
+                .Include(gt => gt.Trainer)
+                .FirstOrDefaultAsync(gt => gt.TrainerId == trainerId);
+        }
 
-        //public async Task<IEnumerable<GymTrainer>> GetAllGymTrainersAsync()
-        //{
-        //    return await _context.GymTrainers
-        //        .Include(gt => gt.Trainer)
-        //        .ToListAsync();
-        //}
+        public async Task<IEnumerable<GymTrainer>> GetAllGymTrainersAsync()
+        {
+            return await _context.GymTrainers
+                .Include(gt => gt.Trainer)
+                .ToListAsync();
+        }
 
     }
 } 

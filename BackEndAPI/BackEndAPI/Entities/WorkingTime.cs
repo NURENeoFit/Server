@@ -19,7 +19,7 @@ namespace BackEndAPI.Entities
         [Required]
         public TimeSpan CloseTime { get; set; }
 
-        //Foreign KEy
+        //Foreign Key
         [Required]
         public int SportComplexId { get; set; }
         [ForeignKey("SportComplexId")]

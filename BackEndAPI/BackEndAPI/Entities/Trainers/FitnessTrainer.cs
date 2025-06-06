@@ -4,8 +4,9 @@ namespace BackEndAPI.Entities
 {
     public class FitnessTrainer : Trainer
     {
-        public Trainer Trainer { get; set; }
-        public ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
-        public ICollection<int> GroupScheduleIds { get; set; } = new List<int>();
+        //foreign key
+        public Trainer? Trainer { get; set; }
+        public List<Specialization> Specializations { get; set; } = new List<Specialization>();
+        public List<GroupSchedule> GroupSchedules { get; set; } = new List<GroupSchedule>();
     }
 } 

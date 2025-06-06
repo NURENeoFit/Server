@@ -9,11 +9,11 @@ namespace BackEndAPI.Entities
 
         [Required]
         [StringLength(50)]
-        public string RoleName { get; set; }
+        public string? RoleName { get; set; }
 
         [StringLength(200)]
-        public string RoleDescription { get; set; }
+        public string? RoleDescription { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public List<User>? Users { get; set; } = new List<User>();
     }
 } 

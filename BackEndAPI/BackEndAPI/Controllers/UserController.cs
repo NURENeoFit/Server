@@ -72,7 +72,6 @@ namespace BackEndAPI.Controllers
             existingUser.HashPassword = updateUser.HashPassword;
             existingUser.RoleId = updateUser.RoleId;
             existingUser.DateOfBirth = updateUser.DateOfBirth;
-            existingUser.UpdatedAt = DateTime.UtcNow;
 
             _userRepository.Update(existingUser);
             await _userRepository.SaveAsync();

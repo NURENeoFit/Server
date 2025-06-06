@@ -11,7 +11,5 @@ namespace BackEndAPI.Entities
         [ForeignKey("FitnessCenterId")]
         public FitnessCenter? FitnessCenter { get; set; }
         public List<FitnessMembershipBooking>? FitnessMembershipBookings { get; set; } = new List<FitnessMembershipBooking>();
-
-
     }
 } 

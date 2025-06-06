@@ -11,7 +11,6 @@ namespace BackEndAPI.DAL.Interfaces
         Task<bool> DeleteFitnessMembershipAsync(int membershipId);
         Task<FitnessMembership> GetFitnessMembershipByIdAsync(int membershipId);
         Task<IEnumerable<FitnessMembership>> GetAllFitnessMembershipsAsync();
-        Task<IEnumerable<FitnessMembership>> GetFitnessMembershipsByUserIdAsync(int userId);
         Task<IEnumerable<FitnessMembership>> GetFitnessMembershipsByFitnessCenterIdAsync(int fitnessCenterId);
     }
 } 

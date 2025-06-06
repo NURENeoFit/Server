@@ -70,7 +70,6 @@ namespace BackEndAPI.Controllers
             existingPersonalData.Gender = updatePersonalUserData.Gender;
             existingPersonalData.ActivityLevel = updatePersonalUserData.ActivityLevel;
             existingPersonalData.GoalId = updatePersonalUserData.GoalId;
-            existingPersonalData.UpdatedAt = DateTime.UtcNow;
 
             _personalUserDataRepository.Update(existingPersonalData);
             await _personalUserDataRepository.SaveAsync();

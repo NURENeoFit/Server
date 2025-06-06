@@ -37,8 +37,6 @@ namespace BackEndAPI.Controllers
                     TrainerLastName = g.Key.LastName,
                     TrainerPhone = g.Key.Phone,
                     TrainerExperience = g.Key.Experience,
-                    TrainerEmail = g.Key.Email,
-                    TrainerUsername = g.Key.Username,
                     WorkoutPrograms = g.Select(wp => new WorkoutProgramResponse
                     {
                         WorkoutProgramId = wp.WorkoutProgramId,
@@ -120,7 +118,6 @@ namespace BackEndAPI.Controllers
             existingProgram.ProgramGoalId = updateWorkoutProgram.ProgramGoalId;
             existingProgram.Duration = updateWorkoutProgram.Duration;
             existingProgram.ProgramType = updateWorkoutProgram.ProgramType;
-            existingProgram.UpdatedAt = DateTime.UtcNow;
 
             _workoutProgramRepository.Update(existingProgram);
             await _workoutProgramRepository.SaveAsync();

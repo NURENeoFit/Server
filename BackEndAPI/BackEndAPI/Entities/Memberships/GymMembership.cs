@@ -5,10 +5,10 @@ namespace BackEndAPI.Entities
 {
     public class GymMembership : Membership
     {
-        [ForeignKey("GymCenter")]
+        public Membership? Membership { get; set; }
         public int GymCenterId { get; set; }
-        public Membership Membership { get; set; }
-        public GymCenter GymCenter { get; set; }
+        [ForeignKey("GymCenterId")]
+        public GymCenter? GymCenter { get; set; }
         public List<GymMembershipBooking> GymMembershipBookings { get; set; } = new List<GymMembershipBooking>();
     }
 } 

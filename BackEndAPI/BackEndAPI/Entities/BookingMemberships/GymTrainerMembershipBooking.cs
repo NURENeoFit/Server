@@ -6,16 +6,9 @@ namespace BackEndAPI.Entities
 {
     public class GymTrainerMembershipBooking
     {
-        [Key, Column(Order = 0)]
+        [Key]
+        [Required]
         public int GymTrainerMembershipBookingId {  get; set; }
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public User User { get; set; }
-
-        [Key, Column(Order = 1)]
-        [ForeignKey("Membership")]
-        public int MembershipId { get; set; }
-        public GymTrainerMembership GymTrainerMembership { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -23,8 +16,14 @@ namespace BackEndAPI.Entities
         [Required]
         public DateTime EndDate { get; set; }
 
-        [ForeignKey("Payment")]
-        public int? PaymentId { get; set; }
-        // public Payment Payment { get; set; } // Uncomment if Payment entity exists
+        [Required]
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
+        [Required]
+        public int MembershipId { get; set; }
+        [ForeignKey("MembershipId")]
+        public Membership? Membership { get; set; }
+        public GymTrainerMembership? GymTrainerMembership { get; set; }
     }
 } 

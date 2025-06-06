@@ -36,7 +36,6 @@ namespace BackEndAPI
             builder.Services.AddScoped<IUserMealRepository, UserMealRepository>();
             builder.Services.AddScoped<IWorkoutProgramRepository, WorkoutProgramRepository>();
             builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
-            builder.Services.AddScoped<IUserExerciseLogRepository, UserExerciseLogRepository>();
             builder.Services.AddScoped<ISportComplexRepository, SportComplexRepository>();
             builder.Services.AddScoped<IFitnessCenterRepository, FitnessCenterRepository>();
             builder.Services.AddScoped<IGymCenterRepository, GymCenterRepository>();

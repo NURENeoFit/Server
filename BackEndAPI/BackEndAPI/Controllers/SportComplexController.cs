@@ -41,9 +41,8 @@ namespace BackEndAPI.Controllers
             if (existing == null)
                 return NotFound();
 
-            existing.GymName = updated.GymName;
+            existing.SportComplexName = updated.SportComplexName;
             existing.Address = updated.Address;
-            existing.OpeningHours = updated.OpeningHours;
 
             _sportComplexRepository.Update(existing);
             await _sportComplexRepository.SaveAsync();

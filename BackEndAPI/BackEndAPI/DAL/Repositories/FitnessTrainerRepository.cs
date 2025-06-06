@@ -49,7 +49,7 @@ namespace BackEndAPI.DAL.Repositories
 
             // Обновляем специфичные данные фитнес-тренера
             existingTrainer.Specializations = trainer.Specializations;
-            existingTrainer.GroupScheduleIds = trainer.GroupScheduleIds;
+            existingTrainer.GroupSchedules = trainer.GroupSchedules;
 
             await _context.SaveChangesAsync();
             return existingTrainer;

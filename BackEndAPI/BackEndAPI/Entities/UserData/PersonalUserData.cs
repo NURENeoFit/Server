@@ -7,25 +7,16 @@ namespace BackEndAPI.Entities
     public class PersonalUserData
     {
         [Key]
+        [Required]
         public int PersonalUserDataId { get; set; }
 
         [Required]
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public User User { get; set; }
-
-        [Required]
-        [ForeignKey("Goal")]
-        public int GoalId { get; set; }
-        public Goal Goal { get; set; }
-
-        [Required]
         [Range(0, 500)]
-        public decimal WeightKg { get; set; }
+        public double WeightKg { get; set; }
 
         [Required]
         [Range(0, 300)]
-        public decimal HeightCm { get; set; }
+        public double HeightCm { get; set; }
 
         [Required]
         [Range(0, 120)]
@@ -37,10 +28,18 @@ namespace BackEndAPI.Entities
         [Required]
         public ActivityLevel ActivityLevel { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
+        //Foreign key
+        [Required]
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
 
-        public ICollection<UserTargetCalculation> UserTargetCalculations { get; set; }
-        public ICollection<UserMeal> UserMeals { get; set; }
+        [Required]
+        public int GoalId { get; set; }
+        [ForeignKey("GoalId")]
+        public Goal? Goal { get; set; }
+
+        public List<UserTargetCalculation>? UserTargetCalculations { get; set; } = new List<UserTargetCalculation>();
+        public List<UserMeal>? UserMeals { get; set; } = new List<UserMeal>();
     }
 } 

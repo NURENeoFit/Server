@@ -7,6 +7,7 @@ namespace BackEndAPI.Entities
     public class Goal
     {
         [Key]
+        [Required]
         public int GoalId { get; set; }
 
         [Required]
@@ -14,14 +15,11 @@ namespace BackEndAPI.Entities
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
-
-        // Navigation property for PersonalUserData
-        public ICollection<PersonalUserData> PersonalUsersData { get; set; }
-        public ICollection<WorkoutProgram> WorkoutPrograms { get; set; }
+        // Navigation property
+        public List<PersonalUserData>? PersonalUsersData { get; set; } = new List<PersonalUserData>();
+        public List<WorkoutProgram>? WorkoutPrograms { get; set; } = new List<WorkoutProgram>();
 
     }
 } 

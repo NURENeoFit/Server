@@ -47,8 +47,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<GymMembershipBooking> GetGymMembershipBookingByIdAsync(int bookingId)
         {
             return await _context.GymMembershipBookings
-                .Include(b => b.GymMembership)
-                    .ThenInclude(gm => gm.Membership)
+                .Include(b => b.User)
                 .Include(b => b.GymMembership)
                     .ThenInclude(gm => gm.GymCenter)
                 .FirstOrDefaultAsync(b => b.GymMembershipBookingId == bookingId);
@@ -57,8 +56,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<IEnumerable<GymMembershipBooking>> GetAllGymMembershipBookingsAsync()
         {
             return await _context.GymMembershipBookings
-                .Include(b => b.GymMembership)
-                    .ThenInclude(gm => gm.Membership)
+                .Include(b => b.User)
                 .Include(b => b.GymMembership)
                     .ThenInclude(gm => gm.GymCenter)
                 .ToListAsync();
@@ -67,22 +65,20 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<IEnumerable<GymMembershipBooking>> GetGymMembershipBookingsByUserIdAsync(int userId)
         {
             return await _context.GymMembershipBookings
-                .Include(b => b.GymMembership)
-                    .ThenInclude(gm => gm.Membership)
+                .Include(b => b.User)
                 .Include(b => b.GymMembership)
                     .ThenInclude(gm => gm.GymCenter)
-                .Where(b => b.GymMembership.Membership.UserId == userId)
+                .Where(b => b.UserId == userId)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<GymMembershipBooking>> GetGymMembershipBookingsByGymMembershipIdAsync(int gymMembershipId)
         {
             return await _context.GymMembershipBookings
-                .Include(b => b.GymMembership)
-                    .ThenInclude(gm => gm.Membership)
+                .Include(b => b.User)
                 .Include(b => b.GymMembership)
                     .ThenInclude(gm => gm.GymCenter)
-                .Where(b => b.GymMembershipBookingId == gymMembershipId)
+                .Where(b => b.MembershipId == gymMembershipId)
                 .ToListAsync();
         }
     }

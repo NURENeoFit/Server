@@ -5,15 +5,17 @@ namespace BackEndAPI.Entities
 {
     public class GymTrainerMembership : Membership
     {
-        [ForeignKey("GymTrainer")]
+        [Required]
+        public double Price { get; set; }
+
+        //Foreign Key
+        public Membership? Membership { get; set; }
+        [Required]
         public int GymTrainerId { get; set; }
-        public Membership Membership { get; set; }
-        public GymTrainer GymTrainer { get; set; }
-
-        [Required]
-        public decimal Price { get; set; }
-
-        [Required]
-        public int CountOfTraining { get; set; }
+        [ForeignKey("GymTrainerId")]
+        public GymTrainer? GymTrainer { get; set; }
+        [ForeignKey("GymCenterId")]
+        public GymCenter? GymCenter { get; set; }
+        public List<GymTrainerMembershipBooking>? GymMembershipBooking { get; set; } = new List<GymTrainerMembershipBooking>();
     }
 } 

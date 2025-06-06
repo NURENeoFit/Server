@@ -33,13 +33,6 @@ namespace BackEndAPI.Controllers
             return Ok(membership);
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<ActionResult<IEnumerable<GymTrainerMembership>>> GetGymTrainerMembershipsByUserId(int userId)
-        {
-            var memberships = await _gymTrainerMembershipRepository.GetGymTrainerMembershipsByUserIdAsync(userId);
-            return Ok(memberships);
-        }
-
         [HttpGet("trainer/{trainerId}")]
         public async Task<ActionResult<IEnumerable<GymTrainerMembership>>> GetGymTrainerMembershipsByTrainerId(int trainerId)
         {
