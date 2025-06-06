@@ -14,7 +14,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<IEnumerable<UserTargetCalculation>> GetAllTargetsByPersonalUserDataIdAsync(int personalUserDataId)
         {
             return await _context.UserTargetCalculations
-                .Where(tc => tc.UserId == personalUserDataId)
+                .Where(tc => tc.PersonalUserDataId == personalUserDataId)
                 .ToListAsync();
         }
     }

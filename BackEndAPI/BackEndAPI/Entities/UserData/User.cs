@@ -37,6 +37,9 @@ namespace BackEndAPI.Entities
         public DateTime DateOfBirth { get; set; }
 
         //Foreign key
+        public int? PersonalUserDataId { get; set; }
+        [ForeignKey("PersonalUserDataId")]
+        public PersonalUserData? PersonalUserData { get; set; }
         [Required]
         public int RoleId { get; set; }
         [ForeignKey("RoleId")]

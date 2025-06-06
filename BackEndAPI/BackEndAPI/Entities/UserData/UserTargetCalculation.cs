@@ -21,8 +21,8 @@ namespace BackEndAPI.Entities
 
         //Foreign key
         [Required]
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User? User { get; set; }
+        public int PersonalUserDataId { get; set; }
+        [ForeignKey("PersonalUserDataId")]
+        public PersonalUserData? PersonalUserData { get; set; }
     }
 } 

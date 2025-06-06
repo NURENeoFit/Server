@@ -49,7 +49,7 @@ namespace BackEndAPI.Controllers
         {
             await _userTargetCalculationRepository.AddAsync(userTargetCalculation);
             await _userTargetCalculationRepository.SaveAsync();
-            return CreatedAtAction(nameof(GetUserTargetCalculationById), new { userId = userTargetCalculation.UserId }, userTargetCalculation);
+            return CreatedAtAction(nameof(GetUserTargetCalculationById), new { PersonalUserDataId = userTargetCalculation.PersonalUserDataId }, userTargetCalculation);
         }
 
         [HttpPut("{goalId}")]

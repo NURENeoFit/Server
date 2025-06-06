@@ -48,11 +48,11 @@ namespace BackEndAPI
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // PersonalUserData - User (many-to-one)
-            modelBuilder.Entity<PersonalUserData>()
-                .HasOne(p => p.User)
-                .WithMany()
-                .HasForeignKey(p => p.UserId)
+            // User - PersonalUserData (one-to-one)
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.PersonalUserData)
+                .WithOne(p => p.User)
+                .HasForeignKey<PersonalUserData>(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // PersonalUserData - Goal (many-to-one)
@@ -62,19 +62,12 @@ namespace BackEndAPI
                 .HasForeignKey(p => p.GoalId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // UserTargetCalculation - User (many-to-one)
-            modelBuilder.Entity<UserTargetCalculation>()
-                .HasOne(utc => utc.User)
-                .WithMany()
-                .HasForeignKey(utc => utc.UserId)
+            // PersonalUserData - UserTargetCalculation (one-to-many)
+            modelBuilder.Entity<PersonalUserData>()
+                .HasMany(p => p.UserTargetCalculations)
+                .WithOne(utc => utc.PersonalUserData)
+                .HasForeignKey(utc => utc.PersonalUserDataId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            // UserTargetCalculation - Goal (many-to-one)
-            modelBuilder.Entity<UserTargetCalculation>()
-                .HasOne(utc => utc.Goal)
-                .WithMany()
-                .HasForeignKey(utc => utc.GoalId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             // UserMeal - PersonalUserData (many-to-one)
             modelBuilder.Entity<UserMeal>()
@@ -136,19 +129,21 @@ namespace BackEndAPI
             modelBuilder.Entity<GymMembership>().ToTable("GymMemberships");
             modelBuilder.Entity<GymTrainerMembership>().ToTable("GymTrainerMemberships");
 
-            // FitnessMembership - FitnessCenter (many-to-one)
-            modelBuilder.Entity<FitnessMembership>()
-                .HasOne(fm => fm.FitnessCenter)
-                .WithMany()
+            // FitnessCenter - FitnessMembership (one-to-many)
+            modelBuilder.Entity<FitnessCenter>()
+                .HasMany(fc => fc.FitnessMemberships)
+                .WithOne(fm => fm.FitnessCenter)
                 .HasForeignKey(fm => fm.FitnessCenterId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // GymMembership - GymCenter (many-to-one)
-            modelBuilder.Entity<GymMembership>()
-                .HasOne(gm => gm.GymCenter)
-                .WithMany()
+            // GymCenter - GymMembership (one-to-many)
+            modelBuilder.Entity<GymCenter>()
+                .HasMany(gc => gc.GymMemberships)
+                .WithOne(gm => gm.GymCenter)
                 .HasForeignKey(gm => gm.GymCenterId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // GymMembership - GymTrainer Membership
 
             // GymTrainerMembership - GymTrainer (many-to-one)
             modelBuilder.Entity<GymTrainerMembership>()
@@ -211,49 +206,49 @@ namespace BackEndAPI
                 .HasOne(b => b.User)
                 .WithMany()
                 .HasForeignKey(b => b.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<FitnessMembershipBooking>()
                 .HasOne(b => b.FitnessMembership)
                 .WithMany()
                 .HasForeignKey(b => b.MembershipId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<GymMembershipBooking>()
                 .HasOne(b => b.User)
                 .WithMany()
                 .HasForeignKey(b => b.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<GymMembershipBooking>()
                 .HasOne(b => b.GymMembership)
                 .WithMany()
                 .HasForeignKey(b => b.MembershipId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<GymTrainerMembershipBooking>()
                 .HasOne(b => b.User)
                 .WithMany()
                 .HasForeignKey(b => b.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<GymTrainerMembershipBooking>()
                 .HasOne(b => b.GymTrainerMembership)
                 .WithMany()
                 .HasForeignKey(b => b.MembershipId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<GroupTrainingBooking>()
                 .HasOne(b => b.User)
                 .WithMany()
                 .HasForeignKey(b => b.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<GroupTrainingBooking>()
                 .HasOne(b => b.GroupSchedule)
                 .WithMany()
                 .HasForeignKey(b => b.GroupScheduleId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Gym - GymCenter (many-to-one)
             modelBuilder.Entity<Gym>()
@@ -263,5 +258,4 @@ namespace BackEndAPI
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
-} 
 } 
