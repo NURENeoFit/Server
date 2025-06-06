@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackEndAPI.Entities
 {
-
     public class GymTrainerMembership : Membership
     {
         [ForeignKey("GymTrainer")]
@@ -11,10 +10,12 @@ namespace BackEndAPI.Entities
         public GymTrainer GymTrainer { get; set; }
 
         [Required]
+        public GymTrainerMembershipType Type { get; set; }
+
+        [Required]
         public decimal Price { get; set; }
 
         [Required]
         public int CountOfTraining { get; set; }
-
     }
 } 

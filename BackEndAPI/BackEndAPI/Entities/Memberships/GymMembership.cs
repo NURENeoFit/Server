@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackEndAPI.Entities
 {
-
     public class GymMembership : Membership
     {
         [ForeignKey("GymCenter")]

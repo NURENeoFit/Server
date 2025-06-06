@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BackEndAPI.DAL.Interfaces;
 using BackEndAPI.Entities;
+using BackEndAPI.Models;
+using BackEndAPI.Services;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BackEndAPI.Controllers
 {
@@ -10,9 +14,12 @@ namespace BackEndAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly JwtService _jwtService;
+
+        public UserController(IUserRepository userRepository, JwtService jwtService)
         {
             _userRepository = userRepository;
+            _jwtService = jwtService;
         }
 
         [HttpGet]
@@ -86,6 +93,38 @@ namespace BackEndAPI.Controllers
             await _userRepository.SaveAsync();
 
             return NoContent();
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
+        {
+            var user = (await _userRepository.FindAsync(u => u.Username == request.Username)).FirstOrDefault();
+            
+            if (user == null)
+            {
+                return Unauthorized(new { message = "Invalid username or password" });
+            }
+
+            // Хешируем введенный пароль для сравнения с хешем в базе
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
+                var hashedPassword = Convert.ToBase64String(hashedBytes);
+
+                if (user.HashPassword != hashedPassword)
+                {
+                    return Unauthorized(new { message = "Invalid username or password" });
+                }
+            }
+
+            var token = _jwtService.GenerateToken(user);
+
+            return Ok(new LoginResponse
+            {
+                Token = token,
+                Username = user.Username,
+                UserId = user.UserId,
+            });
         }
     }
 }

@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using BackEndAPI;
 using BackEndAPI.DAL.Interfaces;
 using BackEndAPI.DAL.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using BackEndAPI.Services;
 
 namespace BackEndAPI
 {
@@ -42,6 +46,25 @@ namespace BackEndAPI
             builder.Services.AddScoped<IGymMembershipRepository, GymMembershipRepository>();
             builder.Services.AddScoped<IGymTrainerMembershipRepository, GymTrainerMembershipRepository>();
 
+            // Configure JWT Authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+                });
+
+            // Register JwtService
+            builder.Services.AddScoped<JwtService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -53,8 +76,9 @@ namespace BackEndAPI
 
             app.UseHttpsRedirection();
 
+            // Add authentication middleware
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 

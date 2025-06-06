@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace BackEndAPI.Entities
 {
@@ -7,5 +8,8 @@ namespace BackEndAPI.Entities
         [ForeignKey("FitnessCenter")]
         public int FitnessCenterId { get; set; }
         public FitnessCenter FitnessCenter { get; set; }
+
+        [Required]
+        public FitnessMembershipType Type { get; set; }
     }
 } 

@@ -19,6 +19,7 @@ namespace BackEndAPI.Entities
 
         [Required]
         [StringLength(50)]
+        [Index(IsUnique = true)]
         public string Username { get; set; }
 
         [Required]
@@ -29,9 +30,11 @@ namespace BackEndAPI.Entities
         [Required]
         [EmailAddress]
         [StringLength(100)]
+        [Index(IsUnique = true)]
         public string Email { get; set; }
 
         [Required]
+        [StringLength(256)] // Для хранения хеша SHA256
         public string HashPassword { get; set; }
 
         [Required]
