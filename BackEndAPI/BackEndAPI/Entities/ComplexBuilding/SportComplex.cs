@@ -6,21 +6,20 @@ namespace BackEndAPI.Entities
     public class SportComplex
     {
         [Key]
+        [Required]
         public int SportComplexId { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string GymName { get; set; }
+        public string? SportComplexName { get; set; }
 
         [Required]
         [StringLength(200)]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
-        [StringLength(100)]
-        public string OpeningHours { get; set; }
-
-        public ICollection<FitnessCenter> FitnessCenters { get; set; }
-        public ICollection<GymCenter> GymCenters { get; set; }
-        public ICollection<WorkingTime> WorkingTimes { get; set; }
+        //navigation property
+        public List<FitnessCenter> FitnessCenters { get; set; } = new List<FitnessCenter>();
+        public List<GymCenter> GymCenters { get; set; } = new List<GymCenter>();
+        public List<WorkingTime> WorkingTimes { get; set; } = new List<WorkingTime>();
     }
 } 

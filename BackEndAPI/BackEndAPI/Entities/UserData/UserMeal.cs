@@ -8,12 +8,8 @@ namespace BackEndAPI.Entities
     public class UserMeal
     {
         [Key]
-        public int UserMealId { get; set; }
-
         [Required]
-        [ForeignKey("PersonalUserData")]
-        public int UserProfileId { get; set; }
-        public PersonalUserData PersonalUserData { get; set; }
+        public int UserMealId { get; set; }
 
         [Required]
         public MealType Type { get; set; }
@@ -25,6 +21,12 @@ namespace BackEndAPI.Entities
         public DateTime CreatedTime { get; set; }
 
         [StringLength(500)]
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
+
+        //Foreign Key
+        [Required]
+        public int UserProfileId { get; set; }
+        [ForeignKey("PersonalUserDataId")]
+        public PersonalUserData? PersonalUserData { get; set; }
     }
 } 

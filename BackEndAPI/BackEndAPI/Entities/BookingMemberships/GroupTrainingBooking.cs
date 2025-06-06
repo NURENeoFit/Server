@@ -7,21 +7,15 @@ namespace BackEndAPI.Entities
     public class GroupTrainingBooking
     {
         [Key]
-        public int BookingId { get; set; }
-
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public User User { get; set; }
-
-        [ForeignKey("GroupSchedule")]
-        public int GroupScheduleId { get; set; }
-        public GroupSchedule GroupSchedule { get; set; } 
-
+        public int GroupTrainingBookingId { get; set; }
         [Required]
         public DateTime BookingDate { get; set; }
-
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
         [Required]
-        [StringLength(50)]
-        public string Status { get; set; }
+        public int GroupScheduleId { get; set; }
+        [ForeignKey("GroupScheduleId")]
+        public GroupSchedule? GroupSchedule { get; set; }
     }
 } 

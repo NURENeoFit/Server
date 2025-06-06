@@ -6,16 +6,9 @@ namespace BackEndAPI.Entities
 {
     public class GymMembershipBooking
     {
-        [Key, Column(Order = 0)]
+        [Key]
+        [Required]
         public int GymMembershipBookingId { get; set; }
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public User User { get; set; }
-
-        [Key, Column(Order = 1)]
-        [ForeignKey("Membership")]
-        public int MembershipId { get; set; }
-        public GymMembership GymMembership { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -23,8 +16,27 @@ namespace BackEndAPI.Entities
         [Required]
         public DateTime EndDate { get; set; }
 
-        [ForeignKey("Payment")]
-        public int? PaymentId { get; set; }
-        // public Payment Payment { get; set; } // Uncomment if Payment entity exists
+        [Required]
+        public int UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
+
+        // Связь с GymMembership через внешний ключ
+        [Required]
+        public int GymMembershipId { get; set; }  // Это внешний ключ для связи с GymMembership
+
+        [ForeignKey("GymMembershipId")]
+        public GymMembership GymMembership { get; set; }
+
+        // Если GymMembership наследует от Membership, можно сделать еще одно навигационное свойство
+        // которое будет ссылаться на Membership
+        [ForeignKey("MembershipId")]
+        public Membership Membership { get; set; }
+
+        // Внешний ключ, который указывает на родительскую сущность Membership, через GymMembership
+        [Required]
+        public int MembershipId { get; set; }  // Это внешний ключ для связи с Membership
+
     }
 } 

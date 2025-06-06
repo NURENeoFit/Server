@@ -13,10 +13,10 @@ namespace BackEndAPI.Entities
 
         [Required]
         [StringLength(100)]
-        public string MembershipName { get; set; }
+        public string? MembershipName { get; set; }
 
         [StringLength(300)]
-        public string MembershipDescription { get; set; }
+        public string? MembershipDescription { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -24,8 +24,5 @@ namespace BackEndAPI.Entities
         [Required]
         public DateTime EndDate { get; set; }
 
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public User User { get; set; }
     }
 } 

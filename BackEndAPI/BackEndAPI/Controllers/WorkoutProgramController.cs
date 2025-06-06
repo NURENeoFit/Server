@@ -41,7 +41,7 @@ namespace BackEndAPI.Controllers
                     TrainerUsername = g.Key.Username,
                     WorkoutPrograms = g.Select(wp => new WorkoutProgramResponse
                     {
-                        WorkoutProgramId = wp.WorkoutTrainingId,
+                        WorkoutProgramId = wp.WorkoutProgramId,
                         Name = wp.ProgramName,
                         TrainerId = wp.TrainerId,
                         Duration = wp.Duration,
@@ -103,7 +103,7 @@ namespace BackEndAPI.Controllers
         {
             await _workoutProgramRepository.AddAsync(workoutProgram);
             await _workoutProgramRepository.SaveAsync();
-            return CreatedAtAction(nameof(GetWorkoutProgramById), new { id = workoutProgram.WorkoutTrainingId }, workoutProgram);
+            return CreatedAtAction(nameof(GetWorkoutProgramById), new { id = workoutProgram.WorkoutProgramId }, workoutProgram);
         }
 
         [HttpPut("{id}")]

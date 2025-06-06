@@ -6,14 +6,9 @@ namespace BackEndAPI.Entities
 {
     public class UserTargetCalculation
     {
-        [Key, ForeignKey("Goal")]
-        public int GoalId { get; set; }
-        public Goal Goal { get; set; }
-
+        [Key]
         [Required]
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public int UserTargetCalculationId { get; set; }
 
         [Required]
         public decimal CalculatedNormalCalories { get; set; }
@@ -23,5 +18,11 @@ namespace BackEndAPI.Entities
 
         [Required]
         public DateTime CalculatedTargetDate { get; set; }
+
+        //Foreign key
+        [Required]
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
     }
 } 

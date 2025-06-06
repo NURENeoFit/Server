@@ -8,17 +8,6 @@ namespace BackEndAPI.Entities
     {
         [Key]
         public int GroupScheduleId { get; set; }
-
-        [Required]
-        [ForeignKey("FitnessTrainer")]
-        public int FitnessTrainerId { get; set; }
-        public FitnessTrainer FitnessTrainer { get; set; }
-
-        [Required]
-        [ForeignKey("GroupTraining")]
-        public int GroupTrainingId { get; set; }
-        public GroupTraining GroupTraining { get; set; }
-
         [Required]
         public DateTime DateOfDay { get; set; }
 
@@ -27,5 +16,17 @@ namespace BackEndAPI.Entities
 
         [Required]
         public TimeSpan EndTime { get; set; }
+
+        //Foreign Key
+        [Required]
+        public int FitnessTrainerId { get; set; }
+        [ForeignKey("FitnessTrainerId")]
+        public FitnessTrainer? FitnessTrainer { get; set; }
+
+        [Required]
+        public int GroupTrainingId { get; set; }
+        [ForeignKey("GroupTrainingId")]
+        public GroupTraining? GroupTraining { get; set; }
+
     }
 } 

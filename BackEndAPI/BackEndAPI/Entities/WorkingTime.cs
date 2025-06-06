@@ -10,18 +10,19 @@ namespace BackEndAPI.Entities
         public int WorkingTimeId { get; set; }
 
         [Required]
-        [ForeignKey("SportComplex")]
-        public int SportComplexId { get; set; }
-        public SportComplex SportComplex { get; set; }
-
-        [Required]
         [StringLength(20)]
-        public string DayOfWeek { get; set; }
+        public string? DayOfWeek { get; set; }
 
         [Required]
         public TimeSpan OpenTime { get; set; }
 
         [Required]
         public TimeSpan CloseTime { get; set; }
+
+        //Foreign KEy
+        [Required]
+        public int SportComplexId { get; set; }
+        [ForeignKey("SportComplexId")]
+        public SportComplex? SportComplex { get; set; }
     }
 } 

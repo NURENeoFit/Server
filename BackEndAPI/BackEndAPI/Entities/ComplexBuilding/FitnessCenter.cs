@@ -10,13 +10,16 @@ namespace BackEndAPI.Entities
 
         [Required]
         [StringLength(100)]
-        public string FitnessCenterName { get; set; }
+        public string? FitnessCenterName { get; set; }
 
+        //Foreign Key
         [Required]
-        [ForeignKey("SportComplex")]
         public int SportComplexId { get; set; }
-        public SportComplex SportComplex { get; set; }
+        [ForeignKey("SportComplexId")]
+        public SportComplex? SportComplex { get; set; }
 
-        public ICollection<FitnessMembership> FitnessMemberships { get; set; }
+        public List<FitnessMembership> FitnessMemberships { get; set; } = new List<FitnessMembership>();
+        public List<FitnessMembership> FitnessRooms { get; set; } = new List<FitnessMembership>();
+
     }
 } 

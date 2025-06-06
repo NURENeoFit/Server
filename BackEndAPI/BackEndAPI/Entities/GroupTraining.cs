@@ -6,19 +6,22 @@ namespace BackEndAPI.Entities
     public class GroupTraining
     {
         [Key]
-        public int TrainingId { get; set; }
-
         [Required]
-        [ForeignKey("Specialization")]
-        public int SpecializationId { get; set; }
-        public Specialization Specialization { get; set; }
-
-        [Required]
-        [ForeignKey("FitnessRoom")]
-        public int FitnessRoomId { get; set; }
-        public FitnessRoom FitnessRoom { get; set; }
+        public int GropTrainingId { get; set; }
 
         [Required]
         public int Duration { get; set; } // in minutes
+
+        //Foreign key
+        [Required]
+        public int SpecializationId { get; set; }
+        [ForeignKey("SpecializationId")]
+        public Specialization? Specialization { get; set; }
+
+        [Required]
+        public int FitnessRoomId { get; set; }
+        [ForeignKey("FitnessRoomId")]
+        public FitnessRoom? FitnessRoom { get; set; }
+        public List<GroupSchedule>? GroupSchedules { get; set; } = new List<GroupSchedule>();
     }
 } 

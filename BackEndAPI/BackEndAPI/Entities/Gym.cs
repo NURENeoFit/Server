@@ -10,11 +10,11 @@ namespace BackEndAPI.Entities
 
         [Required]
         [StringLength(100)]
-        public string GymName { get; set; }
+        public string? GymName { get; set; }
 
         [Required]
-        [ForeignKey("GymCenter")]
         public int GymCenterId { get; set; }
-        public GymCenter GymCenter { get; set; }
+        [ForeignKey("GymCenterId")]
+        public GymCenter? GymCenter { get; set; }
     }
 } 
