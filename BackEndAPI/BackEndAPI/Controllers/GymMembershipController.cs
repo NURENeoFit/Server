@@ -47,29 +47,29 @@ namespace BackEndAPI.Controllers
             return Ok(memberships);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<GymMembership>> CreateGymMembership([FromBody] GymMembership membership)
-        {
-            var createdMembership = await _gymMembershipRepository.CreateGymMembershipAsync(membership);
-            return CreatedAtAction(nameof(GetGymMembershipById), new { id = createdMembership.GymMembershipId }, createdMembership);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<GymMembership>> CreateGymMembership([FromBody] GymMembership membership)
+        //{
+        //    var createdMembership = await _gymMembershipRepository.CreateGymMembershipAsync(membership);
+        //    return CreatedAtAction(nameof(GetGymMembershipById), new { id = createdMembership.GymMembershipId }, createdMembership);
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGymMembership(int id, [FromBody] GymMembership membership)
-        {
-            if (id != membership.GymMembershipId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateGymMembership(int id, [FromBody] GymMembership membership)
+        //{
+        //    if (id != membership.GymMembershipId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var updatedMembership = await _gymMembershipRepository.UpdateGymMembershipAsync(membership);
-            if (updatedMembership == null)
-            {
-                return NotFound();
-            }
+        //    var updatedMembership = await _gymMembershipRepository.UpdateGymMembershipAsync(membership);
+        //    if (updatedMembership == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGymMembership(int id)

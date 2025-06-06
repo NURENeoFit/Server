@@ -19,7 +19,6 @@ namespace BackEndAPI.DAL.Repositories
                 LastName = trainer.LastName,
                 Email = trainer.Email,
                 Phone = trainer.Phone,
-                RoleId = trainer.RoleId
             };
 
             _context.Trainers.Add(baseTrainer);
@@ -49,7 +48,7 @@ namespace BackEndAPI.DAL.Repositories
             existingTrainer.Trainer.Phone = trainer.Phone;
 
             // Обновляем специфичные данные фитнес-тренера
-            existingTrainer.SpecializationIds = trainer.SpecializationIds;
+            existingTrainer.Specializations = trainer.Specializations;
             existingTrainer.GroupScheduleIds = trainer.GroupScheduleIds;
 
             await _context.SaveChangesAsync();

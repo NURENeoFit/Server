@@ -21,7 +21,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<GymMembershipBooking> UpdateGymMembershipBookingAsync(GymMembershipBooking booking)
         {
             var existingBooking = await _context.GymMembershipBookings
-                .FirstOrDefaultAsync(b => b.BookingId == booking.BookingId);
+                .FirstOrDefaultAsync(b => b.GymMembershipBookingId == booking.GymMembershipBookingId);
 
             if (existingBooking == null)
                 return null;
@@ -34,7 +34,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<bool> DeleteGymMembershipBookingAsync(int bookingId)
         {
             var booking = await _context.GymMembershipBookings
-                .FirstOrDefaultAsync(b => b.BookingId == bookingId);
+                .FirstOrDefaultAsync(b => b.GymMembershipBookingId == bookingId);
 
             if (booking == null)
                 return false;
@@ -51,7 +51,7 @@ namespace BackEndAPI.DAL.Repositories
                     .ThenInclude(gm => gm.Membership)
                 .Include(b => b.GymMembership)
                     .ThenInclude(gm => gm.GymCenter)
-                .FirstOrDefaultAsync(b => b.BookingId == bookingId);
+                .FirstOrDefaultAsync(b => b.GymMembershipBookingId == bookingId);
         }
 
         public async Task<IEnumerable<GymMembershipBooking>> GetAllGymMembershipBookingsAsync()
@@ -61,7 +61,6 @@ namespace BackEndAPI.DAL.Repositories
                     .ThenInclude(gm => gm.Membership)
                 .Include(b => b.GymMembership)
                     .ThenInclude(gm => gm.GymCenter)
-                .OrderByDescending(b => b.BookingDate)
                 .ToListAsync();
         }
 
@@ -73,7 +72,6 @@ namespace BackEndAPI.DAL.Repositories
                 .Include(b => b.GymMembership)
                     .ThenInclude(gm => gm.GymCenter)
                 .Where(b => b.GymMembership.Membership.UserId == userId)
-                .OrderByDescending(b => b.BookingDate)
                 .ToListAsync();
         }
 
@@ -84,8 +82,7 @@ namespace BackEndAPI.DAL.Repositories
                     .ThenInclude(gm => gm.Membership)
                 .Include(b => b.GymMembership)
                     .ThenInclude(gm => gm.GymCenter)
-                .Where(b => b.GymMembershipId == gymMembershipId)
-                .OrderByDescending(b => b.BookingDate)
+                .Where(b => b.GymMembershipBookingId == gymMembershipId)
                 .ToListAsync();
         }
     }

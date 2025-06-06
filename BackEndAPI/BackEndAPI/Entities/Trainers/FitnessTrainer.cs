@@ -4,7 +4,8 @@ namespace BackEndAPI.Entities
 {
     public class FitnessTrainer : Trainer
     {
-        public ICollection<int> SpecializationIds { get; set; } = new List<int>();
+        public Trainer Trainer { get; set; }
+        public ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
         public ICollection<int> GroupScheduleIds { get; set; } = new List<int>();
     }
 } 

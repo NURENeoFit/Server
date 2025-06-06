@@ -19,8 +19,6 @@ namespace BackEndAPI.DAL.Repositories
                 UserId = membership.UserId,
                 StartDate = membership.StartDate,
                 EndDate = membership.EndDate,
-                Status = membership.Status,
-                Price = membership.Price
             };
 
             _context.Memberships.Add(baseMembership);
@@ -46,12 +44,11 @@ namespace BackEndAPI.DAL.Repositories
             // Обновляем базовые данные членства
             existingMembership.Membership.StartDate = membership.StartDate;
             existingMembership.Membership.EndDate = membership.EndDate;
-            existingMembership.Membership.Status = membership.Status;
-            existingMembership.Membership.Price = membership.Price;
+            existingMembership.Membership.MembershipPrice = membership.Price;
 
             // Обновляем специфичные данные членства с тренером
             existingMembership.GymTrainerId = membership.GymTrainerId;
-            existingMembership.WorkoutProgramIds = membership.WorkoutProgramIds;
+            //existingMembership.WorkoutProgramIds = membership.WorkoutProgramIds;
 
             await _context.SaveChangesAsync();
             return existingMembership;

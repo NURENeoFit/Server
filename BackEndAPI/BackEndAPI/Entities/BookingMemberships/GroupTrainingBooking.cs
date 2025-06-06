@@ -15,7 +15,7 @@ namespace BackEndAPI.Entities
 
         [ForeignKey("GroupSchedule")]
         public int GroupScheduleId { get; set; }
-        // public GroupSchedule GroupSchedule { get; set; } // Uncomment if GroupSchedule entity exists
+        public GroupSchedule GroupSchedule { get; set; } 
 
         [Required]
         public DateTime BookingDate { get; set; }

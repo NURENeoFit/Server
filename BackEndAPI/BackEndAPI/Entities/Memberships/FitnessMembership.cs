@@ -7,9 +7,8 @@ namespace BackEndAPI.Entities
     {
         [ForeignKey("FitnessCenter")]
         public int FitnessCenterId { get; set; }
+        public Membership Membership { get; set; }
         public FitnessCenter FitnessCenter { get; set; }
 
-        [Required]
-        public FitnessMembershipType Type { get; set; }
     }
 } 

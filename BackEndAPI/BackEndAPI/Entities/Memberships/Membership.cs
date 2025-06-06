@@ -24,9 +24,6 @@ namespace BackEndAPI.Entities
         [Required]
         public DateTime EndDate { get; set; }
 
-        [Required]
-        public MembershipStatus Status { get; set; }
-
         [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }

@@ -34,28 +34,28 @@ namespace BackEndAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<GymTrainer>> CreateGymTrainer([FromBody] GymTrainer trainer)
-        {
-            var createdTrainer = await _gymTrainerRepository.CreateGymTrainerAsync(trainer);
-            return CreatedAtAction(nameof(GetGymTrainerById), new { id = createdTrainer.GymTrainerId }, createdTrainer);
-        }
+        //public async Task<ActionResult<GymTrainer>> CreateGymTrainer([FromBody] GymTrainer trainer)
+        //{
+        //    var createdTrainer = await _gymTrainerRepository.CreateGymTrainerAsync(trainer);
+        //    return CreatedAtAction(nameof(GetGymTrainerById), new { id = createdTrainer.GymTrainerId }, createdTrainer);
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGymTrainer(int id, [FromBody] GymTrainer trainer)
-        {
-            if (id != trainer.GymTrainerId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateGymTrainer(int id, [FromBody] GymTrainer trainer)
+        //{
+        //    if (id != trainer.TrainerId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var updatedTrainer = await _gymTrainerRepository.UpdateGymTrainerAsync(trainer);
-            if (updatedTrainer == null)
-            {
-                return NotFound();
-            }
+        //    var updatedTrainer = await _gymTrainerRepository.UpdateGymTrainerAsync(trainer);
+        //    if (updatedTrainer == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGymTrainer(int id)

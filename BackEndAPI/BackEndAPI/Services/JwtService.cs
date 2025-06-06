@@ -37,5 +37,16 @@ namespace BackEndAPI.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public int GetUserIdFromToken(ClaimsPrincipal user)
+        {
+            var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return 0;
+            }
+
+            return int.Parse(userIdClaim.Value);
+        }
     }
 } 

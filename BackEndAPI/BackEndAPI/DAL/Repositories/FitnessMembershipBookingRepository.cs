@@ -21,7 +21,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<FitnessMembershipBooking> UpdateFitnessMembershipBookingAsync(FitnessMembershipBooking booking)
         {
             var existingBooking = await _context.FitnessMembershipBookings
-                .FirstOrDefaultAsync(b => b.BookingId == booking.BookingId);
+                .FirstOrDefaultAsync(b => b.FitnessMembershipBookingId == booking.FitnessMembershipBookingId);
 
             if (existingBooking == null)
                 return null;
@@ -34,7 +34,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<bool> DeleteFitnessMembershipBookingAsync(int bookingId)
         {
             var booking = await _context.FitnessMembershipBookings
-                .FirstOrDefaultAsync(b => b.BookingId == bookingId);
+                .FirstOrDefaultAsync(b => b.FitnessMembershipBookingId == bookingId);
 
             if (booking == null)
                 return false;
@@ -51,7 +51,7 @@ namespace BackEndAPI.DAL.Repositories
                     .ThenInclude(fm => fm.Membership)
                 .Include(b => b.FitnessMembership)
                     .ThenInclude(fm => fm.FitnessCenter)
-                .FirstOrDefaultAsync(b => b.BookingId == bookingId);
+                .FirstOrDefaultAsync(b => b.FitnessMembershipBookingId == bookingId);
         }
 
         public async Task<IEnumerable<FitnessMembershipBooking>> GetAllFitnessMembershipBookingsAsync()
@@ -61,7 +61,6 @@ namespace BackEndAPI.DAL.Repositories
                     .ThenInclude(fm => fm.Membership)
                 .Include(b => b.FitnessMembership)
                     .ThenInclude(fm => fm.FitnessCenter)
-                .OrderByDescending(b => b.BookingDate)
                 .ToListAsync();
         }
 
@@ -73,7 +72,6 @@ namespace BackEndAPI.DAL.Repositories
                 .Include(b => b.FitnessMembership)
                     .ThenInclude(fm => fm.FitnessCenter)
                 .Where(b => b.FitnessMembership.Membership.UserId == userId)
-                .OrderByDescending(b => b.BookingDate)
                 .ToListAsync();
         }
 
@@ -84,8 +82,7 @@ namespace BackEndAPI.DAL.Repositories
                     .ThenInclude(fm => fm.Membership)
                 .Include(b => b.FitnessMembership)
                     .ThenInclude(fm => fm.FitnessCenter)
-                .Where(b => b.FitnessMembershipId == fitnessMembershipId)
-                .OrderByDescending(b => b.BookingDate)
+                .Where(b => b.MembershipId == fitnessMembershipId)
                 .ToListAsync();
         }
     }

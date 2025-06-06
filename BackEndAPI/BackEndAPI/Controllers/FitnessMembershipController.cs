@@ -48,28 +48,28 @@ namespace BackEndAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<FitnessMembership>> CreateFitnessMembership([FromBody] FitnessMembership membership)
-        {
-            var createdMembership = await _fitnessMembershipRepository.CreateFitnessMembershipAsync(membership);
-            return CreatedAtAction(nameof(GetFitnessMembershipById), new { id = createdMembership.FitnessMembershipId }, createdMembership);
-        }
+        //public async Task<ActionResult<FitnessMembership>> CreateFitnessMembership([FromBody] FitnessMembership membership)
+        //{
+        //    var createdMembership = await _fitnessMembershipRepository.CreateFitnessMembershipAsync(membership);
+        //    return CreatedAtAction(nameof(GetFitnessMembershipById), new { id = createdMembership.FitnessMembershipId }, createdMembership);
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateFitnessMembership(int id, [FromBody] FitnessMembership membership)
-        {
-            if (id != membership.FitnessMembershipId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateFitnessMembership(int id, [FromBody] FitnessMembership membership)
+        //{
+        //    if (id != membership.FitnessMembershipId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var updatedMembership = await _fitnessMembershipRepository.UpdateFitnessMembershipAsync(membership);
-            if (updatedMembership == null)
-            {
-                return NotFound();
-            }
+        //    var updatedMembership = await _fitnessMembershipRepository.UpdateFitnessMembershipAsync(membership);
+        //    if (updatedMembership == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFitnessMembership(int id)

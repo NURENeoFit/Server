@@ -57,11 +57,11 @@ namespace BackEndAPI
                 .OnDelete(DeleteBehavior.Cascade);
 
             // PersonalUserData - Goal (many-to-one)
-            modelBuilder.Entity<PersonalUserData>()
-                .HasOne(p => p.Goal)
-                .WithMany(g => g.PersonalUserData)
-                .HasForeignKey(p => p.GoalId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<PersonalUserData>()
+            //    .HasOne(p => p.Goal)
+            //    .WithMany(g => g.PersonalUserData)
+            //    .HasForeignKey(p => p.GoalId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             // UserTargetCalculation - User (many-to-one)
             modelBuilder.Entity<UserTargetCalculation>()

@@ -27,9 +27,9 @@ namespace BackEndAPI
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-            builder.Services.AddScoped<ITrainerRepository, TrainerRepository>();
+            //builder.Services.AddScoped<ITrainerRepository, TrainerRepository>();
             builder.Services.AddScoped<IFitnessTrainerRepository, FitnessTrainerRepository>();
-            builder.Services.AddScoped<IGymTrainerRepository, GymTrainerRepository>();
+            //builder.Services.AddScoped<IGymTrainerRepository, GymTrainerRepository>();
             builder.Services.AddScoped<IGoalRepository, GoalRepository>();
             builder.Services.AddScoped<IPersonalUserDataRepository, PersonalUserDataRepository>();
             builder.Services.AddScoped<IUserTargetCalculationRepository, UserTargetCalculationRepository>();
@@ -41,7 +41,7 @@ namespace BackEndAPI
             builder.Services.AddScoped<IFitnessCenterRepository, FitnessCenterRepository>();
             builder.Services.AddScoped<IGymCenterRepository, GymCenterRepository>();
             builder.Services.AddScoped<IWorkingTimeRepository, WorkingTimeRepository>();
-            builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
+            //builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
             builder.Services.AddScoped<IFitnessMembershipRepository, FitnessMembershipRepository>();
             builder.Services.AddScoped<IGymMembershipRepository, GymMembershipRepository>();
             builder.Services.AddScoped<IGymTrainerMembershipRepository, GymTrainerMembershipRepository>();

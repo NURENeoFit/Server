@@ -2,18 +2,61 @@
 using BackEndAPI.DAL.Repositories;
 using BackEndAPI.Entities;
 using BackEndAPI.Entities.Enums;
+using BackEndAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BackEndAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class WorkoutProgramController : ControllerBase
     {
         private readonly IWorkoutProgramRepository _workoutProgramRepository;
         public WorkoutProgramController(IWorkoutProgramRepository workoutProgramRepository)
         {
             _workoutProgramRepository = workoutProgramRepository;
+        }
+
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<TrainerResponse>>> GetAllWorkoutsWithTrainers()
+        {
+            var programs = await _workoutProgramRepository.GetAllAsync();
+
+            var trainers = programs
+                .GroupBy(wp => wp.Trainer)
+                .Select(g => new TrainerResponse
+                {
+                    TrainerId = g.Key.TrainerId,
+                    TrainerFirstName = g.Key.FirstName,
+                    TrainerLastName = g.Key.LastName,
+                    TrainerPhone = g.Key.Phone,
+                    TrainerExperience = g.Key.Experience,
+                    TrainerEmail = g.Key.Email,
+                    TrainerUsername = g.Key.Username,
+                    WorkoutPrograms = g.Select(wp => new WorkoutProgramResponse
+                    {
+                        WorkoutProgramId = wp.WorkoutTrainingId,
+                        Name = wp.ProgramName,
+                        TrainerId = wp.TrainerId,
+                        Duration = wp.Duration,
+                        ProgramType = wp.ProgramType.ToString(),
+                        Exercises = wp.Exercises.Select(e => new ExerciseResponse
+                        {
+                            ExerciseId = e.ExerciseId,
+                            Name = e.Name,
+                            Duration = e.Duration,
+                            BurnedCalories = e.BurnedCalories
+                        }).ToList()
+                    }).ToList()
+                });
+
+            return Ok(trainers);
         }
 
         [HttpGet]

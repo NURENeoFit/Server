@@ -54,33 +54,33 @@ namespace BackEndAPI.Controllers
             return Ok(trainings);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<GroupTraining>> CreateGroupTraining([FromBody] GroupTraining training)
-        {
-            await _groupTrainingRepository.AddAsync(training);
-            await _groupTrainingRepository.SaveAsync();
-            return CreatedAtAction(nameof(GetGroupTrainingById), new { id = training.GroupTrainingId }, training);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<GroupTraining>> CreateGroupTraining([FromBody] GroupTraining training)
+        //{
+        //    await _groupTrainingRepository.AddAsync(training);
+        //    await _groupTrainingRepository.SaveAsync();
+        //    return CreatedAtAction(nameof(GetGroupTrainingById), new { id = training.GroupTrainingId }, training);
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGroupTraining(int id, [FromBody] GroupTraining training)
-        {
-            if (id != training.GroupTrainingId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateGroupTraining(int id, [FromBody] GroupTraining training)
+        //{
+        //    if (id != training.GroupTrainingId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var existingTraining = await _groupTrainingRepository.GetByIdAsync(id);
-            if (existingTraining == null)
-            {
-                return NotFound();
-            }
+        //    var existingTraining = await _groupTrainingRepository.GetByIdAsync(id);
+        //    if (existingTraining == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _groupTrainingRepository.Update(training);
-            await _groupTrainingRepository.SaveAsync();
+        //    _groupTrainingRepository.Update(training);
+        //    await _groupTrainingRepository.SaveAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGroupTraining(int id)

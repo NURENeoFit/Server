@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,7 +20,6 @@ namespace BackEndAPI.Entities
 
         [Required]
         [StringLength(50)]
-        [Index(IsUnique = true)]
         public string Username { get; set; }
 
         [Required]
@@ -30,7 +30,6 @@ namespace BackEndAPI.Entities
         [Required]
         [EmailAddress]
         [StringLength(100)]
-        [Index(IsUnique = true)]
         public string Email { get; set; }
 
         [Required]

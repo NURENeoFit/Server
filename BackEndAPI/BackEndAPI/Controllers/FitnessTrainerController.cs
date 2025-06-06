@@ -40,29 +40,29 @@ namespace BackEndAPI.Controllers
             return Ok(trainers);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<FitnessTrainer>> CreateFitnessTrainer([FromBody] FitnessTrainer trainer)
-        {
-            var createdTrainer = await _fitnessTrainerRepository.CreateFitnessTrainerAsync(trainer);
-            return CreatedAtAction(nameof(GetFitnessTrainerById), new { id = createdTrainer.FitnessTrainerId }, createdTrainer);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<FitnessTrainer>> CreateFitnessTrainer([FromBody] FitnessTrainer trainer)
+        //{
+        //    var createdTrainer = await _fitnessTrainerRepository.CreateFitnessTrainerAsync(trainer);
+        //    return CreatedAtAction(nameof(GetFitnessTrainerById), new { id = createdTrainer.FitnessTrainerId }, createdTrainer);
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateFitnessTrainer(int id, [FromBody] FitnessTrainer trainer)
-        {
-            if (id != trainer.FitnessTrainerId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateFitnessTrainer(int id, [FromBody] FitnessTrainer trainer)
+        //{
+        //    if (id != trainer.FitnessTrainerId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var updatedTrainer = await _fitnessTrainerRepository.UpdateFitnessTrainerAsync(trainer);
-            if (updatedTrainer == null)
-            {
-                return NotFound();
-            }
+        //    var updatedTrainer = await _fitnessTrainerRepository.UpdateFitnessTrainerAsync(trainer);
+        //    if (updatedTrainer == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFitnessTrainer(int id)

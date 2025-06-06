@@ -14,7 +14,17 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<PersonalUserData> GetPersonalUserDataByUserIdAsync(int userId)
         {
             return await _context.PersonalUserData
+                .Include(pud => pud.Goal)
+                .Include(pud => pud.User)
                 .FirstOrDefaultAsync(pud => pud.UserId == userId);
+        }
+
+        public async Task<PersonalUserData> GetByIdAsync(object id)
+        {
+            return await _context.PersonalUserData
+                .Include(pud => pud.Goal)
+                .Include(pud => pud.User)
+                .FirstOrDefaultAsync(pud => pud.PersonalUserDataId == (int)id);
         }
     }
 } 

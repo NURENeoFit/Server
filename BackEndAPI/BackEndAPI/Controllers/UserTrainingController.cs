@@ -50,12 +50,11 @@ namespace BackEndAPI.Controllers
             // Преобразуем в формат ответа
             var response = bookings.Select(b => new TrainingResponse
             {
-                SpecializationName = b.GroupSchedule.GroupTraining.Specialization.Name,
-                FitnessRoomName = b.GroupSchedule.FitnessRoom.Name,
-                Date = b.GroupSchedule.Date.ToString("yyyy-MM-dd"),
+                SpecializationName = b.GroupSchedule.GroupTraining.Specialization.SpecializationName,
+                Date = b.GroupSchedule.DateOfDay.ToString("yyyy-MM-dd"),
                 StartTime = b.GroupSchedule.StartTime.ToString("HH:mm"),
                 EndTime = b.GroupSchedule.EndTime.ToString("HH:mm"),
-                FullNameTrainer = $"{b.GroupSchedule.FitnessTrainer.User.FirstName} {b.GroupSchedule.FitnessTrainer.User.LastName}"
+                FullNameTrainer = $"{b.GroupSchedule.FitnessTrainer.FirstName} {b.GroupSchedule.FitnessTrainer.LastName}"
             });
 
             return Ok(response);

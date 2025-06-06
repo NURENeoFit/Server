@@ -7,7 +7,7 @@ using BackEndAPI.DAL.Interfaces;
 
 namespace BackEndAPI.DAL.Repositories
 {
-    public class GymTrainerMembershipBookingRepository : GenericRepository<GymTrainerMembershipBooking>, IGymTrainerMembershipBookingRepository
+    public class GymTrainerMembershipBookingRepository : GenericRepository<GymTrainerMembershipBooking>
     {
         public GymTrainerMembershipBookingRepository(AppDbContext context) : base(context) { }
 
@@ -21,7 +21,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<GymTrainerMembershipBooking> UpdateGymTrainerMembershipBookingAsync(GymTrainerMembershipBooking booking)
         {
             var existingBooking = await _context.GymTrainerMembershipBookings
-                .FirstOrDefaultAsync(b => b.BookingId == booking.BookingId);
+                .FirstOrDefaultAsync(b => b.GymTrainerMembershipBookingId == booking.GymTrainerMembershipBookingId);
 
             if (existingBooking == null)
                 return null;
@@ -34,7 +34,7 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<bool> DeleteGymTrainerMembershipBookingAsync(int bookingId)
         {
             var booking = await _context.GymTrainerMembershipBookings
-                .FirstOrDefaultAsync(b => b.BookingId == bookingId);
+                .FirstOrDefaultAsync(b => b.GymTrainerMembershipBookingId == bookingId);
 
             if (booking == null)
                 return false;
@@ -51,7 +51,7 @@ namespace BackEndAPI.DAL.Repositories
                     .ThenInclude(gtm => gtm.Membership)
                 .Include(b => b.GymTrainerMembership)
                     .ThenInclude(gtm => gtm.GymTrainer)
-                .FirstOrDefaultAsync(b => b.BookingId == bookingId);
+                .FirstOrDefaultAsync(b => b.GymTrainerMembershipBookingId == bookingId);
         }
 
         public async Task<IEnumerable<GymTrainerMembershipBooking>> GetAllGymTrainerMembershipBookingsAsync()
@@ -61,7 +61,6 @@ namespace BackEndAPI.DAL.Repositories
                     .ThenInclude(gtm => gtm.Membership)
                 .Include(b => b.GymTrainerMembership)
                     .ThenInclude(gtm => gtm.GymTrainer)
-                .OrderByDescending(b => b.BookingDate)
                 .ToListAsync();
         }
 
@@ -73,20 +72,19 @@ namespace BackEndAPI.DAL.Repositories
                 .Include(b => b.GymTrainerMembership)
                     .ThenInclude(gtm => gtm.GymTrainer)
                 .Where(b => b.GymTrainerMembership.Membership.UserId == userId)
-                .OrderByDescending(b => b.BookingDate)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<GymTrainerMembershipBooking>> GetGymTrainerMembershipBookingsByGymTrainerMembershipIdAsync(int gymTrainerMembershipId)
-        {
-            return await _context.GymTrainerMembershipBookings
-                .Include(b => b.GymTrainerMembership)
-                    .ThenInclude(gtm => gtm.Membership)
-                .Include(b => b.GymTrainerMembership)
-                    .ThenInclude(gtm => gtm.GymTrainer)
-                .Where(b => b.GymTrainerMembershipId == gymTrainerMembershipId)
-                .OrderByDescending(b => b.BookingDate)
-                .ToListAsync();
-        }
+        //public async Task<IEnumerable<GymTrainerMembershipBooking>> GetGymTrainerMembershipBookingsByGymTrainerMembershipIdAsync(int gymTrainerMembershipId)
+        //{
+        //    return await _context.GymTrainerMembershipBookings
+        //        .Include(b => b.GymTrainerMembership)
+        //            .ThenInclude(gtm => gtm.Membership)
+        //        .Include(b => b.GymTrainerMembership)
+        //            .ThenInclude(gtm => gtm.GymTrainer)
+        //        .Where(b => b.GymTrainerMembershipId == gymTrainerMembershipId)
+        //        .OrderByDescending(b => b.BookingDate)
+        //        .ToListAsync();
+        //}
     }
 } 

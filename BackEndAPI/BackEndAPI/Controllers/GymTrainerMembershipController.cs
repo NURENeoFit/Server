@@ -47,29 +47,29 @@ namespace BackEndAPI.Controllers
             return Ok(memberships);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<GymTrainerMembership>> CreateGymTrainerMembership([FromBody] GymTrainerMembership membership)
-        {
-            var createdMembership = await _gymTrainerMembershipRepository.CreateGymTrainerMembershipAsync(membership);
-            return CreatedAtAction(nameof(GetGymTrainerMembershipById), new { id = createdMembership.GymTrainerMembershipId }, createdMembership);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<GymTrainerMembership>> CreateGymTrainerMembership([FromBody] GymTrainerMembership membership)
+        //{
+        //    var createdMembership = await _gymTrainerMembershipRepository.CreateGymTrainerMembershipAsync(membership);
+        //    return CreatedAtAction(nameof(GetGymTrainerMembershipById), new { id = createdMembership.GymTrainerMembershipId }, createdMembership);
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGymTrainerMembership(int id, [FromBody] GymTrainerMembership membership)
-        {
-            if (id != membership.GymTrainerMembershipId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateGymTrainerMembership(int id, [FromBody] GymTrainerMembership membership)
+        //{
+        //    if (id != membership.GymTrainerMembershipId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var updatedMembership = await _gymTrainerMembershipRepository.UpdateGymTrainerMembershipAsync(membership);
-            if (updatedMembership == null)
-            {
-                return NotFound();
-            }
+        //    var updatedMembership = await _gymTrainerMembershipRepository.UpdateGymTrainerMembershipAsync(membership);
+        //    if (updatedMembership == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGymTrainerMembership(int id)

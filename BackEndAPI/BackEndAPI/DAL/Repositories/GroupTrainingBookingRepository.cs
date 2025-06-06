@@ -20,9 +20,7 @@ namespace BackEndAPI.DAL.Repositories
                         .ThenInclude(gt => gt.Specialization)
                 .Include(gtb => gtb.GroupSchedule)
                     .ThenInclude(gs => gs.FitnessTrainer)
-                        .ThenInclude(ft => ft.User)
                 .Include(gtb => gtb.GroupSchedule)
-                    .ThenInclude(gs => gs.FitnessRoom)
                 .Where(gtb => gtb.UserId == userId)
                 .OrderBy(gtb => gtb.BookingDate)
                 .ToListAsync();

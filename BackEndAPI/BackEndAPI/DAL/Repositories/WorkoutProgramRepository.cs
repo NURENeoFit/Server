@@ -17,6 +17,7 @@ namespace BackEndAPI.DAL.Repositories
             return await _context.WorkoutPrograms
                 .Include(wp => wp.Trainer)
                 .Include(wp => wp.Goal)
+                .Include(wp => wp.Exercises)
                 .Where(wp => wp.TrainerId == trainerId)
                 .OrderBy(wp => wp.ProgramName)
                 .ToListAsync();
@@ -25,6 +26,9 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<IEnumerable<WorkoutProgram>> GetAllWorkoutsByGoalAsync(int goalId)
         {
             return await _context.WorkoutPrograms
+                .Include(wp => wp.Trainer)
+                .Include(wp => wp.Goal)
+                .Include(wp => wp.Exercises)
                 .Where(wp => wp.ProgramGoalId == goalId)
                 .ToListAsync();
         }
@@ -32,9 +36,11 @@ namespace BackEndAPI.DAL.Repositories
         public async Task<IEnumerable<WorkoutProgram>> GetAllWorkoutsByTypeAsync(ProgramType type)
         {
             return await _context.WorkoutPrograms
+                .Include(wp => wp.Trainer)
+                .Include(wp => wp.Goal)
+                .Include(wp => wp.Exercises)
                 .Where(wp => wp.ProgramType == type)
                 .ToListAsync();
         }
-
     }
 } 
